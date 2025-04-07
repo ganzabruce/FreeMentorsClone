@@ -10,7 +10,6 @@ const PORT = process.env.PORT
 const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
-
 //routers
 const userPath = require('./routes/user')
 const mentorPath =  require('./routes/mentor')
