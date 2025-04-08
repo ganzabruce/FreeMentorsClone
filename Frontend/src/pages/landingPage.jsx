@@ -1,8 +1,6 @@
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react';
-import Footer from '../components/footer';
-import Nav from '../components/nav';
 
 const LandingPage = () => {
     useEffect(()=>{
@@ -10,7 +8,6 @@ const LandingPage = () => {
     })
     return ( 
         <div className="landing">
-                <Nav />
             <section className='welcome' id='welcome' data-aos='fade-up'>
                 <div className="pict">
                     <div className="img1" data-aos='fade-down-right'>
@@ -66,9 +63,7 @@ const LandingPage = () => {
                     marginTop: '60px'
                 }} data-aos='fade-up'>it's free and it wont take long</h1>
             </section>
-            <section className='closing'>
-                <Footer />
-            </section>
+            
         </div>
      );
 }
