@@ -5,7 +5,8 @@ const Footer = () => {
     return (   
         <div className="footer" id='footer'>  
             <div className="copy">  
-                <h3>&copy; made with ❤️ by Ganza Bruce</h3>  
+                <h3>&copy; {new Date().getFullYear()} All rights reserved</h3><br />
+                <h3>made with ❤️ by Ganza Bruce</h3>
             </div>  
             <div className="link">  
                 <a href="/book-session">Book Session</a>  

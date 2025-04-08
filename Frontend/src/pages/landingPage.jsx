@@ -57,7 +57,7 @@ const LandingPage = () => {
                 <div className="auth" style={{
                     marginTop: '30px'
                 }} data-aos='fade-up'>
-                    <a href="" >
+                    <a href="/menteeRegister" >
                     continue as a mentee
                     </a>
                 </div>

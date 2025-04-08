@@ -1,22 +1,22 @@
-import '../assets/css/mentorLogin.css'
+import '../assets/css/mentee.css'
 import { Link} from 'react-router-dom'
 
-const MentorLog = () => {
+const MenteeLog= () => {
     return ( 
         <div className="mentor-form">
             <div>
                 <Link to="/landing" className='goBack'>Go Back</Link>
                 <form  className='mentor Reg'>
-                <h1 className='h1'>Login as a mentor </h1>
+                <h1 className='h1'>Login as a mentee </h1>
                     <input type="email" placeholder='email' required /><br />
                     <input type="password" placeholder='your password...' required /><br />
                     
                     <button className='submit'>Login</button>
-                    <Link to="/mentorForm">create account</Link>
+                    <Link to="/menteeRegister">create account</Link>
                 </form>
             </div>
         </div>
      );
 }
  
-export default MentorLog;
+export default MenteeLog;
