@@ -15,7 +15,6 @@ exports.signUpMentor = async (req, res) => {
             }) 
         }
         const { firstName, lastName , email, password ,address , bio , occupation , expertise } = req.body;
-        console.log(req.body)
         const userInfo = await Mentor.findOne({ email: email })
         if (userInfo) {
             return res.status(400).json({
@@ -52,25 +51,28 @@ exports.signUpMentor = async (req, res) => {
     }
 }
 // login logic
-exports.loginMentor = async(req,res) =>{
-    const {email , password} = req.body
-    try {
-        const mentor = await Mentor.findOne({email: email})
-        if(!mentor){
-            return res.json({message : 'mentor not found'})
-        }
-        const isAuthenticated  = await bcrypt.compare(password, mentor.password)
-        if(!isAuthenticated){
-            return res.json({message : "invalid password"})
-        }
-        const mentorToken = jwt.sign({mentorId : mentor._id},process.env.JWT_SECRET)
-        res.cookie('mentorToken',mentorToken,{httpOnly:true})
-        res.status(200).json({msg: "success"})
-    } catch (error) {
-        res.status(500).json({message : 'internal server error '})
-    }
+exports.loginMentor = async (req, res) => {  
+    const { email, password } = req.body;  
+    try {  
+        const mentor = await Mentor.findOne({ email: email });  
+        if (!mentor) {  
+            return res.status(404).json({ message: 'mentor not found' });  
+        }  
+        const isAuthenticated = await bcrypt.compare(password, mentor.password);  
+        if (!isAuthenticated) {  
+            return res.status(401).json({ message: "invalid password" });  
+        }  
+        const mentorToken = jwt.sign({ mentorId: mentor._id }, process.env.JWT_SECRET);  
+        console.log("user logged in");  
+        res.cookie('mentorToken', mentorToken, { httpOnly: true });  
+        res.json({mentor : req.body})
+        return res.status(200).json({ msg: "success" }); // Ensure this line is here  
+    } catch (error) {  
+        console.error(error);  
+        return res.status(500).json({ message: 'internal server error' });  
+    }  
+};  
 
-}
 //get pending sessions
 exports.getPendingSessions = async (req,res)=>{
     const mentorToken = req.cookies.mentorToken
