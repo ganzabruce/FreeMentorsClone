@@ -1,13 +1,19 @@
-const express = require('express');
-const userRouter = express.Router();
-const userControler =  require('../controllers/userControllers');
+const express = require('express');  
+const userRouter = express.Router();  
+const userController = require('../controllers/userControllers');  
+const userAuth = require('../middlewares/userAuth');  
 
-userRouter.post('/user/register', userControler.signUp);
-userRouter.post('/user/login', userControler.loginUser);
-userRouter.post('/logoutUser',userControler.logoutUser)
-userRouter.post('/requestSession',userControler.requestSession)
+userRouter.post('/register', userController.signUp);  
+userRouter.post('/login', userController.loginUser);  
 
-userRouter.get('/mentors',userControler.getMentors)
-userRouter.get('/mentors/:id',userControler.getSpecificMentor)
-userRouter.get('/user/mySessions',userControler.viewMySessions)
-module.exports = userRouter;
+// Protected routes  
+userRouter.use(userAuth);
+
+
+userRouter.post('/requestSession', userController.requestSession);  
+userRouter.post('/logoutUser', userController.logoutUser);  
+userRouter.get('/mentors', userController.getMentors);  
+userRouter.get('/mentors/:id', userController.getSpecificMentor);  
+userRouter.get('/user/mySessions', userController.viewMySessions);  
+
+module.exports = userRouter;  

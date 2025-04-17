@@ -5,64 +5,60 @@ const jwt = require('jsonwebtoken')
 const MentorshipSession = require('../models/mentorshipSession')
 const { UserSignUpSchema } = require('../helper/uservalidation');
 
+//create token 
+
+const createToken = (_id)=>{
+    return jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'3d'})
+}
+
+
 //signup logic
 exports.signUp = async (req, res) => {
     try {
         const { error } = UserSignUpSchema.validate(req.body);
         if (error) {
-            return res.status(400).json({
-                msg: error.details[0].message
-            }) 
+            throw Error({error : error.details[0].message})
         }
         const { email, password } = req.body;
         const userInfo = await User.findOne({ email: email })
         if (userInfo) {
-            return res.status(400).json({
-                msg: "Email already registered."
-            })
+            throw Error('email already in use')
         }
-
         const hashPassword = await bcrypt.hash(password, 10);
         try {
             const user = await User.create({
                 email: email,
                 password: hashPassword,
             })
-    
-            return res.status(200).json({
-                msg: "success",
-                data: { user }
-            })
+            const userToken = createToken(user._id)
+            return res.status(200).json({user,userToken})
         } catch (error) {
             if(error.code === 11000){
-                res.status(409).json({message:"user already in use"})
+                res.status(409).json({error:error.message})
             }
-            res.status(500).json({message : "internal server error"})
+            res.status(500).json({error: error.message})
         }
 
     } catch (error) {
-        return res.status(500).json({
-            msg: "Internal server error, please try again"
-        })
+        return res.status(500).json({error:error.message})
     }
 }
 //login logic
-exports.loginUser = async(req,res) =>{
+exports.loginUser = async (req,res) =>{
     const {email , password} = req.body
     try {
         const user = await User.findOne({email: email})
         if(!user){
-            return res.json({message : 'user not found'})
+            throw Error('user not found , please signup first')
         }
         const isAuthenticated  = await bcrypt.compare(password, user.password)
         if(!isAuthenticated){
-            return res.json({message : "invalid password"})
+            throw Error( "invalid credentials")
         }
-        const userToken = jwt.sign({userId : user._id},process.env.JWT_SECRET)
-        res.cookie('userToken',userToken,{httpOnly:true})
-        res.json({message: "logged in"})
+        const userToken = createToken(user._id)
+        res.status(200).json({user,userToken})
     } catch (error) {
-        res.status(500).json({message : 'internal server error '})
+        res.status(500).json({error: error.message})
     }
 }
 //logout logic

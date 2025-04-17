@@ -3,23 +3,20 @@ const Mentor = require('../models/mentor');
 const MentorshipSession = require('../models/mentorshipSession')
 const jwt = require('jsonwebtoken')
 const { signUpSchema } = require('../helper/validation');
-
-
+const createToken = (_id)=>{
+    return jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'3d'})
+}
 //signup logic
 exports.signUpMentor = async (req, res) => {
     try {
         const { error } = signUpSchema.validate(req.body);
         if (error) {
-            return res.status(400).json({
-                msg: error.details[0].message
-            }) 
+            throw Error(error)
         }
         const { firstName, lastName , email, password ,address , bio , occupation , expertise } = req.body;
         const userInfo = await Mentor.findOne({ email: email })
         if (userInfo) {
-            return res.status(400).json({
-                message: "Email already registered."
-            })
+            throw Error('user already registered')
         }
         const hashPassword = await bcrypt.hash(password, 10);
         try {
@@ -34,19 +31,17 @@ exports.signUpMentor = async (req, res) => {
                 expertise : expertise 
             })
             console.log('user created')
-            return res.status(200).json({
-                msg: "success",
-                data: { mentor }
-            })
+            const token = createToken(mentor._id)
+            return res.status(200).json({mentor,token})
         } catch (error) {
             if(error.code === 11000){
-                res.status(409).json({message:"mentor name already in use"})
+                res.status(409).json({error: error.message})
             }
-            res.status(500).json({message : "internal server error"})
+            res.status(500).json({error: error.message})
         }
     } catch (error) {
         return res.status(500).json({
-            msg: error.message
+            error: error.message
         })
     }
 }
@@ -56,40 +51,33 @@ exports.loginMentor = async (req, res) => {
     try {  
         const mentor = await Mentor.findOne({ email: email });  
         if (!mentor) {  
-            return res.status(404).json({ message: 'mentor not found' });  
-        }  
+            throw Error('mentor not found')
+        }
         const isAuthenticated = await bcrypt.compare(password, mentor.password);  
         if (!isAuthenticated) {  
-            return res.status(401).json({ message: "invalid password" });  
+            throw Error ('invalid credentials') 
         }  
-        const mentorToken = jwt.sign({ mentorId: mentor._id }, process.env.JWT_SECRET);  
+        const mentorToken = createToken(mentor._id)
         console.log("user logged in");  
-        res.cookie('mentorToken', mentorToken, { httpOnly: true });  
-        res.json({mentor : req.body})
-        return res.status(200).json({ msg: "success" }); // Ensure this line is here  
+        res.status(200).json({mentor,mentorToken})
     } catch (error) {  
         console.error(error);  
-        return res.status(500).json({ message: 'internal server error' });  
+        return res.status(500).json({error:error.message});  
     }  
 };  
 
+
 //get pending sessions
 exports.getPendingSessions = async (req,res)=>{
-    const mentorToken = req.cookies.mentorToken
-    const verifiedMentor = jwt.verify(mentorToken,process.env.JWT_SECRET)
-    const mentorId = verifiedMentor.mentorId
     try {
-        const pendingSessions = await MentorshipSession.find({
-            mentorId: mentorId,
-            status: "pending"
-        }).lean()
+        const pendingSessions = await MentorshipSession.find({status: "pending"})
         if (pendingSessions.length === 0){
             console.log('no pending sessions')
             return res.json({msg: "no pending sessions requests"})
         }
-        res.status(200).json({pending : pendingSessions})
+        res.status(200).json({pendingSessions})
     } catch (error) {
-        console.log(error)
+        res.status(500).json({error: error.message})
     }
 }
 //logging out
