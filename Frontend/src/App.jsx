@@ -1,9 +1,9 @@
 import LandingPage from "./pages/landingPage"
 import { BrowserRouter as Router, Route , Routes } from 'react-router-dom'
-import MentorRegister from './pages/MentorRegister'
-import MentorLog from "./pages/MentorLogin"
-import MenteeReg from "./pages/menteeRegister"
-import MenteeLog from "./pages/menteeLog"
+import MentorRegister from './pages/mentor/MentorRegister'
+import MentorLog from "./pages/mentor/MentorLogin"
+import MenteeReg from "./pages/mentee/menteeRegister"
+import MenteeLog from "./pages/mentee/menteeLog"
 import MentorHome from "./pages/mentor/mentorHome"
 import Nav from './components/nav'
 import Footer from './components/footer'
@@ -22,7 +22,6 @@ function App() {
         <Route path="/menteeRegister" element={<MenteeReg />} />
         <Route path="/menteeLogin" element={<MenteeLog />} />
         <Route path="/mentorHome" element={<MentorHome />} />
-
       </Routes>
       <footer>
         <Footer />

@@ -17,9 +17,8 @@
     flex-direction: column;
     text-align: center;
 }
-.mentor input{
-    padding: 1.5em 30em 1.5em 1em;
-    padding-right: 20em;
+.mentor input , .text{
+    padding: 1.5em ;
     font-weight: bold;
     margin: 1em 3em;
     border-radius: 50px;
