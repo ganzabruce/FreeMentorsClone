@@ -167,3 +167,7 @@ html{
     font-weight: bold;
     margin: 0 15px; 
 }
+.newLinks{
+    display: flex;
+    list-style: none;
+}

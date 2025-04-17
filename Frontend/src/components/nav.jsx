@@ -13,7 +13,7 @@ const Nav = () => {
         <div className="nav">
             <div className="links">
             {!user ? <a href="#footer">connect with us</a> : 
-            <ul>
+            <ul className='newLinks'>
                 <li><Link>mentors</Link></li>
                 <li><Link>session</Link></li>
             </ul>
