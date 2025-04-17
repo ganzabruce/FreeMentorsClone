@@ -17,12 +17,12 @@ exports.signUp = async (req, res) => {
     try {
         const { error } = UserSignUpSchema.validate(req.body);
         if (error) {
-            throw Error({error : error.details[0].message})
+            throw new Error(error.details[0].message)
         }
         const { email, password } = req.body;
         const userInfo = await User.findOne({ email: email })
         if (userInfo) {
-            throw Error('email already in use')
+            throw new Error('email already in use')
         }
         const hashPassword = await bcrypt.hash(password, 10);
         try {
@@ -36,7 +36,7 @@ exports.signUp = async (req, res) => {
         } catch (error) {
             console.log(error.message)
             if(error.code === 11000){
-                res.status(409).json({error:error.message})
+                res.status(409).json({error:'alreaady email in use'})
             }
             res.status(500).json({error: error.message})
         }

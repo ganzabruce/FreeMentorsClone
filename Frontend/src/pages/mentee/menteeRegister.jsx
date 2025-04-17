@@ -12,7 +12,6 @@ const MenteeReg= () => {
         setPassword('')
     }
     const {signup , error , isLoading } = useMenteeSignup()
-
     const handleSubmit = (e) =>{
         e.preventDefault()
         signup(email,password)

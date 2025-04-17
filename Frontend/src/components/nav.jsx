@@ -1,5 +1,5 @@
 import {UseUserContext} from '../hooks/useUserContext'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 const Nav = () => {
     const navigate = useNavigate('/landing')
     const {dispatch} = UseUserContext()
@@ -7,12 +7,17 @@ const Nav = () => {
     const logoutUser = ()=>{
         localStorage.removeItem('user')
         dispatch({type: "logout"})
-
+        navigate("/menteeLogin")
     }
     return ( 
         <div className="nav">
             <div className="links">
-            <a href="#footer">connect with us</a>
+            {!user ? <a href="#footer">connect with us</a> : 
+            <ul>
+                <li><Link>mentors</Link></li>
+                <li><Link>session</Link></li>
+            </ul>
+            }
             <form >
                 <input type="text" placeholder="search for mentors" id="search" />
             </form>
