@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../assets/css/mentorLogin.css'
+import '../../assets/css/mentorLogin.css'
 import { Link, useNavigate} from 'react-router-dom'
 
 const MentorLog = () => {

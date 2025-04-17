@@ -1,5 +1,5 @@
 import { useState } from 'react';  
-import '../assets/css/mentor.css';  
+import '../../assets/css/mentor.css';  
 import { Link, useNavigate } from 'react-router-dom';  
 
 const MentorLogin = () => {  
@@ -62,7 +62,7 @@ const MentorLogin = () => {
                     <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required /><br />  
                     <input type="password" placeholder='Your Password...' value={password} onChange={(e) => setPassword(e.target.value)} required /><br />  
                     <input type="text" placeholder='Your Address' value={address} onChange={(e) => setAddress(e.target.value)} /><br />  
-                    <textarea placeholder='A short bio...' value={bio} onChange={(e) => setBio(e.target.value)}></textarea>  
+                    <textarea placeholder='A short bio...' value={bio} onChange={(e) => setBio(e.target.value)} className='text'></textarea>  
                     <input type="text" placeholder='Occupation' value={occupation} onChange={(e) => setOccupation(e.target.value)} /><br />  
                     <input type="text" placeholder='Expertise' value={expertise} onChange={(e) => setExpertise(e.target.value)} /><br />  
                     <button className='submit'>Register</button>  

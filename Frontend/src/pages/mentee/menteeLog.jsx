@@ -1,4 +1,4 @@
-import '../assets/css/mentee.css'
+import '../../assets/css/mentee.css'
 import { Link} from 'react-router-dom'
 
 const MenteeLog= () => {
