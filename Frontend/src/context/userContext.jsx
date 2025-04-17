@@ -1,4 +1,5 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
+
 export const userContext = createContext()
 const userReducer = (state,action) =>{
     switch(action.type){
@@ -19,9 +20,18 @@ const userReducer = (state,action) =>{
     }
 }
 export const UserContextProvider = ({children})=>{
+
+    
+    
     const [state , dispatch] = useReducer(userReducer,{
         user: null
     })
+    useEffect(()=>{
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user){
+            dispatch({type:'login',payload:user})
+        }
+    },[])
     console.log({"userContext: ":state })
     return (
         <userContext.Provider value={{...state,dispatch}}>

@@ -1,4 +1,14 @@
+import {UseUserContext} from '../hooks/useUserContext'
+import {useNavigate} from 'react-router-dom'
 const Nav = () => {
+    const navigate = useNavigate('/landing')
+    const {dispatch} = UseUserContext()
+    const {user} = UseUserContext()
+    const logoutUser = ()=>{
+        localStorage.removeItem('user')
+        dispatch({type: "logout"})
+
+    }
     return ( 
         <div className="nav">
             <div className="links">
@@ -13,7 +23,7 @@ const Nav = () => {
                 </a>
             </div>
             <div className="auth">
-                <a href="#account">get Started</a>
+                {!user ? <a href="#account">get Started</a>: <button className='logout' onClick={logoutUser}>Logout</button>}
             </div>
         </div>
      );

@@ -31,14 +31,15 @@ exports.signUp = async (req, res) => {
                 password: hashPassword,
             })
             const userToken = createToken(user._id)
+            console.log(user)
             return res.status(200).json({user,userToken})
         } catch (error) {
+            console.log(error.message)
             if(error.code === 11000){
                 res.status(409).json({error:error.message})
             }
             res.status(500).json({error: error.message})
         }
-
     } catch (error) {
         return res.status(500).json({error:error.message})
     }

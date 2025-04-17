@@ -40,10 +40,11 @@ html{
     text-decoration: none;
 
 }
-.auth a{
+.auth a , .logout{
     background: white;
     text-decoration: none;
     padding: 10px 30px ;
+    outline: none;
     font-family: 'poppins';
     border-radius: 40px;
     color: black;
@@ -51,7 +52,7 @@ html{
     transition: 0.5s;
     font-weight: bold;
 }
-.auth a:hover{
+.auth a , .logout:hover{
     box-shadow: 1px 1px 3px black;
 }
 #search{
