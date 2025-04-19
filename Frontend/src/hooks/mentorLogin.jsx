@@ -1,14 +1,16 @@
 import { useState } from "react"
 import { UseMentorAuth } from "./useMentorAuth"
+import { useNavigate } from "react-router-dom"
 
-export const mentorSignup = () =>{
+export const mentorLogin = () =>{
     const [error ,setError] = useState(null)
     const {dispatch } = UseMentorAuth()
+    const navigate = useNavigate()
     const [isLoading , setIsLoading ]= useState(false)
-    try {
-        const login = async ({email,password})=>{
-            setIsLoading(true)
-            setError(null)
+    const login = async (email,password) =>{
+        setIsLoading(true)
+        setError(null)
+        try {
             const response = await fetch('http://localhost:3003/api/mentor/login',{
                 method: "POST",
                 headers: {
@@ -24,13 +26,14 @@ export const mentorSignup = () =>{
                 setIsLoading(false)
                 localStorage.setItem('mentor',JSON.stringify(data))
                 dispatch({type: "login",payload: data})
+                navigate('/mentorHome')
             }
+        } catch (error) {
+            setError(error.message)
+        }finally{
+            setIsLoading(false)
         }
-    } catch (error) {
-        setError(error.message)
-    }finally{
-        setIsLoading(false)
     }
-
+    
     return {login,error,isLoading}
 }

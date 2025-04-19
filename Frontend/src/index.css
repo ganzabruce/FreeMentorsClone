@@ -171,3 +171,7 @@ html{
     display: flex;
     list-style: none;
 }
+.error{
+    color: red;
+    padding: 1em 3em;
+}

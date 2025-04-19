@@ -3,13 +3,15 @@ import { UseUserContext } from '../hooks/useUserContext';
 import { Link, useNavigate } from 'react-router-dom';  
 const Nav = () => {  
     const navigate = useNavigate();  
-    const { dispatch } = UseUserContext();  
+    const { dispatch: userDispatch } = UseUserContext();
+    const {dispatch : mentorDispatch} = UseMentorAuth()
     const { user } = UseUserContext();  
     const { mentor } = UseMentorAuth();  
     const logoutUser = () => {
         localStorage.removeItem('user');  
         localStorage.removeItem('mentor');  
-        dispatch({ type: "logout" });  
+        userDispatch({ type: "logout" });  
+        mentorDispatch({type: "logout"})
         navigate("/landing");  
     };  
     return (   

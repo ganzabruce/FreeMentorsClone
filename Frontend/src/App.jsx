@@ -9,9 +9,11 @@ import Nav from './components/nav'
 import Footer from './components/footer'
 import Home from './pages/mentee/home'
 import { UseUserContext } from "./hooks/useUserContext"
+import { UseMentorAuth } from "./hooks/useMentorAuth"
 
 function App() {
   const {user} = UseUserContext()
+  const {mentor } = UseMentorAuth()
   return (
     <>
     <Router>
@@ -25,7 +27,7 @@ function App() {
         <Route path="/mentorLogin" element={<MentorLog />} />
         <Route path="/menteeRegister" element={user ? <Navigate to='/' />:<MenteeReg />} />
         <Route path="/menteeLogin" element={user ? <Navigate to='/' />:<MenteeLog />} />
-        <Route path="/mentorHome" element={<MentorHome />} />
+        <Route path="/mentorHome" element={mentor ? <MentorHome /> : <Navigate to='/mentorForm'></Navigate>} />
       </Routes>
       <footer>
         <Footer />
