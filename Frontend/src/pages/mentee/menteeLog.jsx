@@ -34,7 +34,7 @@ const MenteeLog= () => {
                         required 
                     /><br />
                     <button className='submit' disabled={isLoading}>Signup</button>
-                    <Link to="/menteeLogin">Already have an account</Link>
+                    <Link to="/menteeRegister">Already have an account</Link>
                     {error && <div className='error'>{error}</div>}
                 </form>
             </div>

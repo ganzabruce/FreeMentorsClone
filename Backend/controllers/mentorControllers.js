@@ -8,6 +8,7 @@ const createToken = (_id)=>{
 }
 //signup logic
 exports.signUpMentor = async (req, res) => {
+    console.log(typeof req.body.firstName)
     try {
         const { error } = signUpSchema.validate(req.body);
         if (error) {
@@ -45,7 +46,6 @@ exports.signUpMentor = async (req, res) => {
         })
     }
 }
-// login logic
 exports.loginMentor = async (req, res) => {  
     const { email, password } = req.body;  
     try {  

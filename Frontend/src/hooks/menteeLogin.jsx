@@ -18,7 +18,8 @@ export const menteeLogin = ()=>{
             })
             const user = await response.json()
             if(!response.ok){
-                throw new Error(response.error)
+                setIsLoading(false)
+                throw new Error(user.error)
             }else{
                 localStorage.setItem('user',JSON.stringify(user))
                 dispatch({type: "login",payload:user})

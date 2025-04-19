@@ -1,29 +1,25 @@
 import { useState } from 'react';
 import '../../assets/css/mentorLogin.css'
 import { Link, useNavigate} from 'react-router-dom'
+import { UseMentorAuth } from '../../hooks/useMentorAuth';
 
 const MentorLog = () => {
     const [email ,setEmail] = useState('')
     const [password ,setPassword] = useState('')
-    const [error ,setError] = useState(null)
-    const navigate = useNavigate
+    const {login , error ,isLoading} = UseMentorAuth()
     
-    const handleLogin = async ()=>{
-        const json = {email , password}
-        const response = await fetch('http://localhost:3003/mentor/login',{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(json)
-        })
-        if (!response){
-            return setError('failed to login')
-        }
-        setError(null)
-        navigate('/mentorHome')
+    const clearInputs = ()=> {
+        setEmail('')
+        setPassword('')
+    }
 
+    
+    const handleLogin = async (e)=>{
+        e.preventDefault()
+        clearInputs()
     }  
+
+    
     return ( 
         <div className="mentor-form">
             <div>
