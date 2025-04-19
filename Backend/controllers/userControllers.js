@@ -4,14 +4,10 @@ const Mentor = require('../models/mentor');
 const jwt = require('jsonwebtoken')
 const MentorshipSession = require('../models/mentorshipSession')
 const { UserSignUpSchema } = require('../helper/uservalidation');
-
 //create token 
-
 const createToken = (_id)=>{
     return jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'3d'})
 }
-
-
 //signup logic
 exports.signUp = async (req, res) => {
     try {
@@ -59,8 +55,9 @@ exports.loginUser = async (req,res) =>{
         const userToken = createToken(user._id)
         res.status(200).json({user,userToken})
     } catch (error) {
-        res.status(500).json({error: error.message})
-    }
+        console.log(error.message)
+        res.status(500).json({error:error.message})
+    }   
 }
 //logout logic
 exports.logoutUser = (req,res)=>{

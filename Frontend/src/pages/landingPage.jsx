@@ -1,6 +1,7 @@
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react';
+import {Link} from 'react-router-dom'
 
 const LandingPage = () => {
     useEffect(()=>{
@@ -43,9 +44,9 @@ const LandingPage = () => {
                 <div className="auth" style={{
                     marginTop: '30px'
                 }} data-aos='fade-up'>
-                    <a href="/mentorForm" >
+                    <Link to="/mentorForm" >
                     continue as a mentor
-                    </a>
+                    </Link>
                 </div>
 
                     <h1 style={{
@@ -54,9 +55,9 @@ const LandingPage = () => {
                 <div className="auth" style={{
                     marginTop: '30px'
                 }} data-aos='fade-up'>
-                    <a href="/menteeRegister" >
+                    <Link to="/menteeRegister" >
                     continue as a mentee
-                    </a>
+                    </Link>
                 </div>
                 <h1 style={{
                     color:'gray',
