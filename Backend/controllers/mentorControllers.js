@@ -8,8 +8,8 @@ const createToken = (_id)=>{
 }
 //signup logic
 exports.signUpMentor = async (req, res) => {
-    console.log(typeof req.body.firstName)
     try {
+
         const { error } = signUpSchema.validate(req.body);
         if (error) {
             throw Error(error)

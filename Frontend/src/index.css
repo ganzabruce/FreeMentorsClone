@@ -173,5 +173,6 @@ html{
 }
 .error{
     color: red;
-    padding: 1em 3em;
+    background: rgb(233, 166, 166);
+    padding: 1em ;
 }
